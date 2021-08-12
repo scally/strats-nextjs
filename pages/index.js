@@ -1,26 +1,51 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import useSWR from 'swr'
+import getDayOfYear from 'date-fns/getDayOfYear'
 
-export default function Home() {
+const fetchToday = async url => {
+  const res = await fetch(url)
+  return res.json()
+}
+
+export const getServerSideProps = async () => ({
+  props: {
+    dayOfYear: getDayOfYear(new Date())
+  }
+})
+
+export default function Home({dayOfYear}) {
+  const { data, error } = useSWR('/api/today', fetchToday)
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>get up, stand up</title>
+        <title>🗓Interop Standup🗓</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Standup Picker Thing
+          Interop Standup
         </h1>
 
         <p className={styles.description}>
-          Stuff
+          Standup brought to you by: 
         </p>
+        {
+          (!!error || !data) ? <div>Loading</div> : 
+          (
+            <div>
+              <h3>🎉 {data.today}🎉</h3>
+              <p>or alternatively: </p>
+              <h4>🎉 {data.alternative}🎉</h4>
+            </div>
+          )
+        }
       </main>
 
       <footer className={styles.footer}>
-        the footer
+        Today is day {dayOfYear}
       </footer>
     </div>
   )
