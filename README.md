@@ -1,3 +1,13 @@
+# strats-nextjs
+
+Lightweight standup calendar
+
+This is an experiment building the same micro-app in multiple languages for a bake-off.
+
+This app is the ocaml version. There will also be one each for F#/Rescript, which are other ML descendants.
+
+*original nextjs docs follow*
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
